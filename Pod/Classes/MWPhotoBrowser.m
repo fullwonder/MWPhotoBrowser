@@ -222,9 +222,7 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
         [_doneButton setBackgroundImage:nil forState:UIControlStateHighlighted barMetrics:UIBarMetricsLandscapePhone];
         [_doneButton setTitleTextAttributes:[NSDictionary dictionary] forState:UIControlStateNormal];
         [_doneButton setTitleTextAttributes:[NSDictionary dictionary] forState:UIControlStateHighlighted];
-        if (!self.tapViewToDismiss) {
-            self.navigationItem.rightBarButtonItem = _doneButton;
-        }
+        self.navigationItem.rightBarButtonItem = _doneButton;
     } else {
         // We're not first so show back button
         UIViewController *previousViewController = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
@@ -448,7 +446,12 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
 #pragma mark - Nav Bar Appearance
 
 - (void)setNavBarAppearance:(BOOL)animated {
-    [self.navigationController setNavigationBarHidden:NO animated:animated];
+    if (self.tapViewToDismiss) {
+        [self.navigationController setNavigationBarHidden:YES animated:animated];
+    } else {
+        [self.navigationController setNavigationBarHidden:NO animated:animated];
+    }
+    
     UINavigationBar *navBar = self.navigationController.navigationBar;
     navBar.tintColor = [UIColor whiteColor];
     navBar.barTintColor = nil;
@@ -1136,6 +1139,9 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
 		CGRect pageFrame = [self frameForPageAtIndex:index];
         [_pagingScrollView setContentOffset:CGPointMake(pageFrame.origin.x - PADDING, 0) animated:animated];
 		[self updateNavigation];
+        if (_pageControl) {
+            _pageControl.currentPage = index;
+        }
 	}
 	
 	// Update timer to give more time
@@ -1564,9 +1570,6 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
         [self jumpToPageAtIndex:index animated:NO];
         if (!_viewIsActive)
             [self tilePages]; // Force tiling if view is not visible
-        if (_pageControl) {
-            _pageControl.currentPage = index;
-        }
     }
 }
 
