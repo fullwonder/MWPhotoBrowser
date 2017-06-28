@@ -158,6 +158,12 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
 	_pagingScrollView.backgroundColor = [UIColor blackColor];
     _pagingScrollView.contentSize = [self contentSizeForPagingScrollView];
 	[self.view addSubview:_pagingScrollView];
+    // page control
+    if (self.tapViewToDismiss && [self numberOfPhotos] > 1) {
+        _pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(pagingScrollViewFrame.origin.x, pagingScrollViewFrame.origin.y + pagingScrollViewFrame.size.height - 30, pagingScrollViewFrame.size.width, 20)];
+        _pageControl.numberOfPages = [self numberOfPhotos];
+        [self.view addSubview:_pageControl];
+    }
 	
     // Toolbar
     _toolbar = [[UIToolbar alloc] initWithFrame:[self frameForToolbarAtOrientation:self.interfaceOrientation]];
@@ -969,6 +975,8 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
     // Update nav
     [self updateNavigation];
     
+    // page control
+    _pageControl.currentPage = index;
 }
 
 #pragma mark - Frame Calculations
@@ -1556,6 +1564,9 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
         [self jumpToPageAtIndex:index animated:NO];
         if (!_viewIsActive)
             [self tilePages]; // Force tiling if view is not visible
+        if (_pageControl) {
+            _pageControl.currentPage = index;
+        }
     }
 }
 

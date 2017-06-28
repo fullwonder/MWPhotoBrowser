@@ -30,6 +30,7 @@
     NSUInteger _previousPageIndex;
     CGRect _previousLayoutBounds;
 	NSUInteger _pageIndexBeforeRotation;
+    UIPageControl *_pageControl;
 	
 	// Navigation & controls
 	UIToolbar *_toolbar;
