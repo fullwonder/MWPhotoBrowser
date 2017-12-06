@@ -159,7 +159,7 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
     _pagingScrollView.contentSize = [self contentSizeForPagingScrollView];
 	[self.view addSubview:_pagingScrollView];
     // page control
-    if (self.tapViewToDismiss && [self numberOfPhotos] > 1) {
+    if (self.tapViewToDismiss && [self numberOfPhotos] > 1 && !self.hiddenPageControl) {
         _pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(pagingScrollViewFrame.origin.x, pagingScrollViewFrame.origin.y + pagingScrollViewFrame.size.height - 30, pagingScrollViewFrame.size.width, 20)];
         _pageControl.numberOfPages = [self numberOfPhotos];
         [self.view addSubview:_pageControl];

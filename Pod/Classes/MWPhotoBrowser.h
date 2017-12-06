@@ -51,6 +51,7 @@
 @property (nonatomic) BOOL startOnGrid;
 @property (nonatomic) BOOL autoPlayOnAppear;
 @property (nonatomic) BOOL tapViewToDismiss;
+@property (nonatomic) BOOL hiddenPageControl;
 @property (nonatomic) NSUInteger delayToHideElements;
 @property (nonatomic, readonly) NSUInteger currentIndex;
 
